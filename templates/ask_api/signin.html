@@ -1,0 +1,63 @@
+{% extends 'ask_api/base.html' %}
+{% load staticfiles %}
+{% block main_content %}
+    <div class="container">
+        <div id="signupbox" class="col-md-6 col-sm-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Sign In</div>
+                </div>
+                <div class="panel-body">
+                    <form id="signupform" class="form-horizontal" role="form" method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div id="signupalert" class="alert alert-danger">
+                                <p>Errors:{{ form.non_field_errors }}</p>
+                                <span></span>
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="username" class="col-md-3 control-label">Username</label>
+
+                            <div class="col-md-9">
+                                {{ form.username }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Password</label>
+
+                            <div class="col-md-9">
+                                {{ form.password }}
+                            </div>
+                        </div>
+
+                        <div class="form-group" hidden="true">
+                            <div class="col-md-9">
+                                {{ form.state }}
+                            </div>
+                        </div>
+
+                        <div class="form-group" hidden="true">
+                            <div class="col-md-9">
+                                {{ form.client_id }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="submit" value="Sign in" class="btn btn-info">
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock main_content %}

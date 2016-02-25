@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from rest_framework.relations import HyperlinkedRelatedField
-
 from ask_api.models import Question, Answer, CustomUser
 
 
 class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email')
+        fields = ('username', 'email',)
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -19,7 +18,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    author = UserShortSerializer(read_only=True)
+    author = UserShortSerializer()
 
     class Meta:
         model = Answer
@@ -28,8 +27,14 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True, read_only=True)
-    author = UserShortSerializer()
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Question
         fields = ('title', 'body', 'author', 'date', 'answers')
+
+    def create(self, validated_data):
+        validated_data.update({'author': self._context['request'].user})
+        return super(QuestionSerializer, self).create(validated_data)
+
+

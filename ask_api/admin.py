@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from django.utils.translation import ugettext_lazy as _
 from ask_api.forms import CustomUserChangeForm, CustomUserCreateForm
-from ask_api.models import Question, Answer, CustomUser, Client
+from ask_api.models import Question, Answer, CustomUser, Client, Authorization, Access
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'phone', 'password1', 'password2'),
+            'fields': ('username', 'email', 'phone_number', 'password1', 'password2'),
         }),
     )
 
@@ -28,5 +28,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register([Question, Answer])
-admin.site.register(Client)
+admin.site.register([Question, Answer, Authorization, Client, Access])

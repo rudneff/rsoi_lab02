@@ -1,0 +1,7 @@
+{% extends 'ask_api/base.html' %}
+{% block main_content %}
+    <div>
+        <h3>Auth code: {{ auth_code }}</h3>
+        {% if state %}<h3> State: {{ state }} </h3>{% endif %}
+    </div>
+{% endblock main_content %}
